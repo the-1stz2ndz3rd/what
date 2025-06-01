@@ -1,20 +1,25 @@
 import json
-from tkinter import Widget
+import os
 
-def get_group_theme(group_name):
+GROUPS_FILE = os.path.join("data", "groups.json")
+
+def get_theme_for_group(group_name):
     try:
-        with open("data/groups.json", "r") as f:
+        with open(GROUPS_FILE, "r") as f:
             groups = json.load(f)
-        group_data = groups.get(group_name)
-        if group_data:
-            return {
-                "color": group_data.get("theme_color", "#cccccc"),
-                "motto": group_data.get("motto", ""),
-            }
-    except FileNotFoundError:
-        pass
-    return {"color": "#cccccc", "motto": ""}
+        group_info = groups.get(group_name, {})
+        return group_info.get("theme_color", "lightgray")  # ✅ Updated key
+    except Exception as e:
+        print(f"Error loading theme for group {group_name}: {e}")
+        return "lightgray"
 
-def apply_theme(widget: Widget, group_name: str):
-    theme = get_group_theme(group_name)
-    widget.configure(bg=theme["color"])
+def apply_theme(widget, color_name):
+    try:
+        widget.configure(bg=color_name)
+        for child in widget.winfo_children():
+            try:
+                child.configure(bg=color_name)
+            except:
+                pass
+    except:
+        pass
