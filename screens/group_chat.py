@@ -16,7 +16,8 @@ class GroupChatScreen(tk.Frame):
         bg_color = theme.get("theme_color", "#ffffff") if theme else "#ffffff"
         self.configure(bg=bg_color)
 
-        tk.Label(self, text=f"{self.group_name} Group Chat", font=("Arial", 16, "bold"), bg=bg_color).pack(pady=10)
+        # 👇 Replaced f-string with .format()
+        tk.Label(self, text="{} Group Chat".format(self.group_name), font=("Arial", 16, "bold"), bg=bg_color).pack(pady=10)
 
         self.chat_frame = tk.Frame(self, bg=bg_color)
         self.chat_frame.pack(fill="both", expand=True)
