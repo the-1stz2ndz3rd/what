@@ -1,18 +1,14 @@
 import tkinter as tk
 
 class ChatBubble(tk.Frame):
-    def __init__(self, parent, sender, message, is_self=False):
-        super().__init__(parent, bg="white", padx=5, pady=2)
+    def __init__(self, parent, sender, message, align="left", bg_color=None, **kwargs):
+        super().__init__(parent, bg=bg_color or "#f0f0f0", **kwargs)
 
-        bubble_color = "#DCF8C6" if is_self else "#FFFFFF"
-        align = "e" if is_self else "w"
-        anchor = "e" if is_self else "w"
+        bubble = tk.Frame(self, bg=bg_color or "#e1f5fe", bd=1, relief="solid", padx=5, pady=3)
+        sender_label = tk.Label(bubble, text=sender, font=("Arial", 8, "bold"), bg=bubble["bg"])
+        message_label = tk.Label(bubble, text=message, wraplength=300, justify="left", bg=bubble["bg"])
 
-        frame = tk.Frame(self, bg=bubble_color, bd=1, relief="solid")
-        frame.pack(anchor=anchor, padx=10, pady=2, fill="x")
+        sender_label.pack(anchor="w")
+        message_label.pack(anchor="w")
 
-        name_label = tk.Label(frame, text=sender, font=("Helvetica", 9, "bold"), bg=bubble_color, anchor=align)
-        name_label.pack(anchor=anchor)
-
-        message_label = tk.Label(frame, text=message, wraplength=300, justify="left", bg=bubble_color, anchor=align)
-        message_label.pack(anchor=anchor)
+        bubble.pack(side="left" if align == "left" else "right", padx=10, pady=5)
