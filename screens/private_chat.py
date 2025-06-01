@@ -1,45 +1,87 @@
 import tkinter as tk
 from tkinter import ttk
-from utils.chat_manager import get_private_messages, send_private_message
+from utils.chat_manager import load_private_chat, save_private_message
 from components.chat_bubble import ChatBubble
+import datetime
 
 class PrivateChatScreen(tk.Frame):
-    def __init__(self, master, controller, current_user, other_user):
-        super().__init__(master)
+    def __init__(self, parent, controller):
+        super().__init__(parent)
         self.controller = controller
-        self.current_user = current_user
-        self.other_user = other_user
+        self.configure(bg="white")
 
-        self.canvas = tk.Canvas(self, bg="#ffffff", highlightthickness=0)
-        self.scrollbar = ttk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
-        self.chat_frame = tk.Frame(self.canvas, bg="#ffffff")
-        self.chat_frame.bind("<Configure>", lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+        self.recipient = None
+        self.chat_frame = tk.Frame(self, bg="white")
+        self.chat_frame.pack(expand=True, fill="both", padx=20, pady=10)
 
-        self.canvas.create_window((0, 0), window=self.chat_frame, anchor="nw")
+        # Scrollbar + Canvas setup for chat
+        self.canvas = tk.Canvas(self.chat_frame, bg="white", highlightthickness=0)
+        self.scrollbar = ttk.Scrollbar(self.chat_frame, orient="vertical", command=self.canvas.yview)
+        self.scrollable_frame = tk.Frame(self.canvas, bg="white")
+
+        self.scrollable_frame.bind(
+            "<Configure>",
+            lambda e: self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        )
+        self.canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
 
-        self.canvas.pack(side="top", fill="both", expand=True)
+        self.canvas.pack(side="left", fill="both", expand=True)
         self.scrollbar.pack(side="right", fill="y")
 
-        self.entry = tk.Entry(self, font=("Arial", 12))
-        self.entry.pack(fill="x", side="left", expand=True, padx=10, pady=5)
-        self.entry.bind("<Return>", self.send_message)
+        # Message entry
+        entry_frame = tk.Frame(self, bg="white")
+        entry_frame.pack(fill="x", padx=20, pady=(0, 20))
+        self.msg_entry = ttk.Entry(entry_frame)
+        self.msg_entry.pack(side="left", fill="x", expand=True, padx=(0, 10))
+        send_btn = ttk.Button(entry_frame, text="Send", command=self.send_message)
+        send_btn.pack(side="right")
 
-        self.send_btn = tk.Button(self, text="Send", command=self.send_message)
-        self.send_btn.pack(side="right", padx=10, pady=5)
+        # Back button
+        back_btn = ttk.Button(self, text="← Back", command=lambda: controller.show_frame("DashboardScreen"))
+        back_btn.place(x=10, y=10)
 
-        self.load_messages()
+    def load_chat(self):
+        self.recipient = self.controller.private_recipient
+        current_user = self.controller.current_user
 
-    def load_messages(self):
-        for widget in self.chat_frame.winfo_children():
+        if not self.recipient:
+            return
+
+        # Clear previous messages
+        for widget in self.scrollable_frame.winfo_children():
             widget.destroy()
-        messages = get_private_messages(self.current_user, self.other_user)
-        for msg in messages:
-            ChatBubble(self.chat_frame, msg["sender"], msg["text"]).pack(anchor="w" if msg["sender"] != self.current_user else "e", pady=2, padx=5)
 
-    def send_message(self, event=None):
-        text = self.entry.get().strip()
-        if text:
-            send_private_message(self.current_user, self.other_user, self.current_user, text)
-            self.entry.delete(0, tk.END)
-            self.load_messages()
+        chat_key = self.get_chat_key(current_user, self.recipient)
+        messages = load_private_chat(chat_key)
+
+        for msg in messages:
+            is_user = msg['sender'] == current_user
+            bubble = ChatBubble(self.scrollable_frame, msg['text'], is_user)
+            bubble.pack(anchor="e" if is_user else "w", pady=2, padx=5)
+
+        self.canvas.update_idletasks()
+        self.canvas.yview_moveto(1.0)
+
+    def send_message(self):
+        msg = self.msg_entry.get().strip()
+        if not msg:
+            return
+
+        current_user = self.controller.current_user
+        recipient = self.controller.private_recipient
+        timestamp = datetime.datetime.now().isoformat(timespec='seconds')
+
+        chat_key = self.get_chat_key(current_user, recipient)
+        save_private_message(chat_key, current_user, msg, timestamp)
+
+        bubble = ChatBubble(self.scrollable_frame, msg, is_user=True)
+        bubble.pack(anchor="e", pady=2, padx=5)
+        self.msg_entry.delete(0, tk.END)
+
+        self.canvas.update_idletasks()
+        self.canvas.yview_moveto(1.0)
+
+    @staticmethod
+    def get_chat_key(user1, user2):
+        return "_".join(sorted([user1, user2]))
