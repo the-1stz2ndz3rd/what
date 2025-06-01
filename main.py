@@ -1,43 +1,58 @@
 import tkinter as tk
 from screens.login_screen import LoginScreen
 from screens.signup_screen import SignupScreen
-from screens.dashboard import Dashboard
-from screens.group_chat import GroupChatScreen  # Future screens can be added
-from utils.theme_loader import apply_background
+from screens.dashboard import DashboardScreen
+from screens.group_chat import GroupChatScreen
+from screens.private_chat import PrivateChatScreen
+from screens.profile_screen import ProfileScreen
+from screens.settings_screen import SettingsScreen
 
 class HobbyHiveApp(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Hobby Hive")
-        self.geometry("1000x700")
+        self.geometry("800x600")
         self.resizable(False, False)
 
-        # Dictionary to hold all frames
+        self.container = tk.Frame(self)
+        self.container.pack(fill="both", expand=True)
+
         self.frames = {}
+        self.user_data = {}     # Will hold info like username, hobbies, etc.
+        self.current_group = "" # Used when navigating to group chat
+        self.private_recipient = ""  # Used for private chat
 
-        # Container to hold current screen
-        container = tk.Frame(self)
-        container.pack(fill="both", expand=True)
-
-        # Store active user (None at start)
-        self.active_user = None
-
-        # Initialize all the screens
-        for F in (LoginScreen, SignupScreen, Dashboard, GroupChatScreen):
-            frame = F(parent=container, controller=self)
-            self.frames[F.__name__] = frame
-            frame.grid(row=0, column=0, sticky="nsew")
+        self.create_frames()
 
         self.show_frame("LoginScreen")
 
-    def show_frame(self, screen_name):
-        '''Raises the screen to the top'''
-        frame = self.frames[screen_name]
-        frame.tkraise()
+    def create_frames(self):
+        for F in (LoginScreen, SignupScreen, DashboardScreen,
+                  GroupChatScreen, PrivateChatScreen,
+                  ProfileScreen, SettingsScreen):
+            page_name = F.__name__
+            frame = F(parent=self.container, controller=self)
+            self.frames[page_name] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
 
-    def set_active_user(self, user):
-        '''Stores the logged-in user's info'''
-        self.active_user = user
+    def show_frame(self, page_name, **kwargs):
+        frame = self.frames[page_name]
+
+        # Pass optional data to screens
+        if page_name == "DashboardScreen":
+            frame.load_user_data()
+        elif page_name == "GroupChatScreen" and "group_name" in kwargs:
+            self.current_group = kwargs["group_name"]
+            frame.load_messages(self.current_group)
+        elif page_name == "PrivateChatScreen" and "recipient" in kwargs:
+            self.private_recipient = kwargs["recipient"]
+            frame.load_messages(self.private_recipient)
+        elif page_name == "ProfileScreen":
+            frame.load_profile()
+        elif page_name == "SettingsScreen":
+            pass  # Nothing to pre-load yet
+
+        frame.tkraise()
 
 if __name__ == "__main__":
     app = HobbyHiveApp()
