@@ -1,7 +1,7 @@
 # screens/signup_screen.py
 import tkinter as tk
 from tkinter import messagebox
-from utils.auth import register_user
+from utils.auth import validate_signup as register_user
 
 class SignupScreen(tk.Frame):
     def __init__(self, parent, controller):

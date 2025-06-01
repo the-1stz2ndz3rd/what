@@ -18,9 +18,9 @@ class HobbyHiveApp(tk.Tk):
         self.container.pack(fill="both", expand=True)
 
         self.frames = {}
-        self.user_data = {}     # Will hold info like username, hobbies, etc.
-        self.current_group = "" # Used when navigating to group chat
-        self.private_recipient = ""  # Used for private chat
+        self.user_data = {}           # Holds info like username, hobbies, etc.
+        self.current_group_data = {}  # Used for group chat
+        self.private_recipient = ""   # Used for private chat
 
         self.create_frames()
 
@@ -38,12 +38,10 @@ class HobbyHiveApp(tk.Tk):
     def show_frame(self, page_name, **kwargs):
         frame = self.frames[page_name]
 
-        # Pass optional data to screens
-        if page_name == "DashboardScreen":
-            frame.load_user_data()
-        elif page_name == "GroupChatScreen" and "group_name" in kwargs:
-            self.current_group = kwargs["group_name"]
-            frame.load_messages(self.current_group)
+        # Optional data to screens
+        if page_name == "GroupChatScreen" and "group_data" in kwargs:
+            self.current_group_data = kwargs["group_data"]
+            frame.load_messages(self.current_group_data)
         elif page_name == "PrivateChatScreen" and "recipient" in kwargs:
             self.private_recipient = kwargs["recipient"]
             frame.load_messages(self.private_recipient)

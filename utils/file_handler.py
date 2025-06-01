@@ -13,7 +13,7 @@ def read_json(filepath):
         with open(filepath, "r", encoding="utf-8") as f:
             return json.load(f)
     except json.JSONDecodeError:
-        print(f"[ERROR] Failed to decode JSON in {filepath}. Returning empty.")
+        print("[ERROR] Failed to decode JSON in {}. Returning empty.".format(filepath))
         return [] if filepath.endswith("users.json") else {}
 
 def write_json(filepath, data):
@@ -22,4 +22,5 @@ def write_json(filepath, data):
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=4)
     except Exception as e:
-        print(f"[ERROR] Failed to write to {filepath}: {e}")
+        print("[ERROR] Failed to write to {}: {}".format(filepath, e))
+
