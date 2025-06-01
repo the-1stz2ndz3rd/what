@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from utils.chat_manager import load_private_chat, save_private_message
+from utils.chat_manager import get_private_messages, add_private_message
 from components.chat_bubble import ChatBubble
 import datetime
 

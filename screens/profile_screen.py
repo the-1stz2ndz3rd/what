@@ -1,5 +1,5 @@
 from tkinter import Frame, Label, Button, Checkbutton, IntVar, Toplevel, messagebox
-from utils.file_handler import load_json, save_json
+from utils.file_handler import read_json, write_json
 from utils.matchmaker import get_matches
 
 class ProfileScreen(Frame):
@@ -19,11 +19,11 @@ class ProfileScreen(Frame):
         self.build_ui()
 
     def build_ui(self):
-        Label(self, text=f"Profile: {self.current_user}", font=("Helvetica", 16)).pack(pady=10)
+        Label(self, text="Profile: {}".format(self.current_user), font=("Helvetica", 16)).pack(pady=10)
         Label(self, text="Select Your Hobbies:", font=("Helvetica", 12)).pack()
 
         # Load user data
-        users = load_json("data/users.json")
+        users = read_json("data/users.json")
         user_info = next((u for u in users if u["username"] == self.current_user), {})
         selected_hobbies = user_info.get("hobbies", [])
 
@@ -35,13 +35,13 @@ class ProfileScreen(Frame):
         Button(self, text="💾 Save Changes", command=self.save_hobbies).pack(pady=10)
         Button(self, text="💡 View Hobby Matches", command=self.show_matches).pack(pady=5)
 
-    def save_hobbies(self):
+    def write_hobbies(self):
         selected = [h for h, v in self.hobby_vars.items() if v.get() == 1]
         users = load_json("data/users.json")
         for user in users:
             if user["username"] == self.current_user:
                 user["hobbies"] = selected
-        save_json("data/users.json", users)
+        write_json("data/users.json", users)
         messagebox.showinfo("Saved", "Your hobbies have been updated.")
 
     def show_matches(self):
