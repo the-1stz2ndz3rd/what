@@ -1,0 +1,152 @@
+{
+  "Photography": {
+    "group_name": "Shutter Squad",
+    "motto": "Capturing Moments, telling stories",
+    "theme_color": "sepia",
+    "emoji": "📸"
+  },
+  "Philosophy": {
+    "group_name": "The Dialectic Den",
+    "motto": "Question Everything, think deep, live wisely",
+    "theme_color": "burnt orange",
+    "emoji": "🧠"
+  },
+  "Singing": {
+    "group_name": "Harmonic Voices",
+    "motto": "Sounds from the Heart",
+    "theme_color": "royal blue",
+    "emoji": "🎤"
+  },
+  "Playing Musical Instruments": {
+    "group_name": "The Sound Ensemble",
+    "motto": "Create harmony, inspire hearts",
+    "theme_color": "burgundy",
+    "emoji": "🎸"
+  },
+  "Acting": {
+    "group_name": "Spotlight Society",
+    "motto": "Embody the Character, bring stories to life",
+    "theme_color": "deep red",
+    "emoji": "🎭"
+  },
+  "Crocheting": {
+    "group_name": "Cozy Stitches",
+    "motto": "Weaving warmth, One loop at a Time",
+    "theme_color": "pastel pink",
+    "emoji": "🧶"
+  },
+  "Reading": {
+    "group_name": "PageTurners",
+    "motto": "Escape, learn, and imagine.",
+    "theme_color": "forest green",
+    "emoji": "📚"
+  },
+  "Hiking": {
+    "group_name": "Peak Seekers",
+    "motto": "Climb high. Breathe deep. Live free.",
+    "theme_color": "earthy brown",
+    "emoji": "🥾"
+  },
+  "Running": {
+    "group_name": "Stride Squad",
+    "motto": "Gasping and laughing all the way.",
+    "theme_color": "neon yellow",
+    "emoji": "🏃"
+  },
+  "Dance": {
+    "group_name": "Rhythm Rebels",
+    "motto": "Breaking rules, making moves.",
+    "theme_color": "electric blue",
+    "emoji": "💃"
+  },
+  "Football (Soccer)": {
+    "group_name": "Kickoff Crew",
+    "motto": "Set up, strike hard.",
+    "theme_color": "sky blue",
+    "emoji": "⚽"
+  },
+  "Basketball": {
+    "group_name": "Hoop Syndicate",
+    "motto": "Rise, shoot, score.",
+    "theme_color": "crimson",
+    "emoji": "🏀"
+  },
+  "Skateboarding": {
+    "group_name": "Kickflip Krew",
+    "motto": "Defy gravity, ride the streets.",
+    "theme_color": "rainbow swirl",
+    "emoji": "🛹"
+  },
+  "Video Gaming": {
+    "group_name": "Pixel Pack",
+    "motto": "Defeat bosses, and level up",
+    "theme_color": "neon green",
+    "emoji": "🎮"
+  },
+  "Coding/Programming": {
+    "group_name": "Syntax Squad",
+    "motto": "Smashing bugs, one byte at a time.",
+    "theme_color": "electric purple",
+    "emoji": "💻"
+  },
+  "Learning Languages": {
+    "group_name": "Polyglot Krew",
+    "motto": "Speak more, break barriers",
+    "theme_color": "turquoise",
+    "emoji": "🗣️"
+  },
+  "Traveling": {
+    "group_name": "Globe Trekkers",
+    "motto": "Adventure awaits, grab and embrace it",
+    "theme_color": "sunset orange",
+    "emoji": "🌍"
+  },
+  "Astronomy": {
+    "group_name": "Star Gazers",
+    "motto": "Eyes to the skies, hearts in the cosmos.",
+    "theme_color": "navy blue",
+    "emoji": "🔭"
+  },
+  "Weight Lifting": {
+    "group_name": "Iron Titans",
+    "motto": "Pain is weakness leaving the body.",
+    "theme_color": "steel gray",
+    "emoji": "🏋️"
+  },
+  "Martial Arts": {
+    "group_name": "Warrior Spirit",
+    "motto": "Discipline, Respect, Power",
+    "theme_color": "crimson and black",
+    "emoji": "🥋"
+  },
+  "Fashion Design": {
+    "group_name": "Sewn Society",
+    "motto": "Wear your creativity",
+    "theme_color": "gold",
+    "emoji": "👗"
+  },
+  "Drawing": {
+    "group_name": "Sketch Society",
+    "motto": "Making imagination a reality with every stroke",
+    "theme_color": "charcoal gray",
+    "emoji": "✏️"
+  },
+  "Cooking": {
+    "group_name": "Flavor Foundry",
+    "motto": "Tell stories through flavor, share them with love",
+    "theme_color": "tomato red",
+    "emoji": "🍳"
+  },
+  "Watching Movies": {
+    "group_name": "Cinephiles",
+    "motto": "Watching worlds unfold.",
+    "theme_color": "dark purple",
+    "emoji": "🎬"
+  },
+  "Social Media Content Creating": {
+    "group_name": "Authentic Voices",
+    "motto": "Create, share, inspire",
+    "theme_color": "vibrant teal",
+    "emoji": "📱"
+  }
+}
