@@ -1,24 +1,24 @@
 import tkinter as tk
-from utils.theme_loader import get_group_theme
+from tkinter import ttk
 
-class GroupCard(tk.Frame):
-    def __init__(self, parent, group_name, on_click_callback):
-        super().__init__(parent, bd=2, relief="raised")
-        theme = get_group_theme(group_name)
+def create_group_card(parent, group_data, on_click):
+    frame = ttk.Frame(parent, padding=10)
+    frame.pack(fill='x', pady=5)
 
-        self.configure(bg=theme["color"], padx=10, pady=5)
-        self.group_name = group_name
-        self.on_click_callback = on_click_callback
+    # Use group name and motto
+    name = group_data.get("group_name", "Unnamed Group")
+    motto = group_data.get("motto", "")
 
-        label = tk.Label(self, text=group_name, bg=theme["color"], fg="white", font=("Helvetica", 14, "bold"))
-        label.pack(anchor="w")
+    theme_color = group_data.get("theme_color", "lightgray")  # ✅ Updated key
 
-        motto = tk.Label(self, text=theme["motto"], bg=theme["color"], fg="white", font=("Helvetica", 10, "italic"))
-        motto.pack(anchor="w")
+    label = tk.Label(frame, text=name, font=('Arial', 14, 'bold'), bg=theme_color)
+    label.pack(fill='x')
 
-        self.bind("<Button-1>", self.on_click)
-        label.bind("<Button-1>", self.on_click)
-        motto.bind("<Button-1>", self.on_click)
+    sublabel = tk.Label(frame, text=motto, font=('Arial', 10), bg=theme_color)
+    sublabel.pack(fill='x')
 
-    def on_click(self, event):
-        self.on_click_callback(self.group_name)
+    frame.bind("<Button-1>", lambda e: on_click(group_data))
+    label.bind("<Button-1>", lambda e: on_click(group_data))
+    sublabel.bind("<Button-1>", lambda e: on_click(group_data))
+
+    return frame
